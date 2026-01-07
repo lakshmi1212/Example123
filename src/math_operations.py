@@ -1,4 +1,3 @@
-# Math operations module
 def add(a, b):
     """Add two numbers."""
     return a + b
