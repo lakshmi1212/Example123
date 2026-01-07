@@ -1,85 +1,64 @@
-# ======================================================
-# GitHub Actions CI Pipeline for Python (pytest)
-# File: .github/workflows/ci.yml
+# CI Pipeline for Python project using pytest
+# This workflow is automatically generated based on default/math.json metadata.
 #
-# This workflow automatically runs all pytest test cases in the
-# 'tests' directory on every push or pull request to the main branch.
+# Triggers:
+#   - On push to main branch
+#   - On pull request targeting main branch
 #
-# Features:
-# - Triggers on push and PR to 'main'
-# - Sets up Python 3.10
-# - Installs dependencies from requirements.txt (pytest)
-# - Runs all tests in 'tests' directory
-# - Fails pipeline if any test fails
-# - Includes error handling, reporting, and documentation
-# ======================================================
+# Python Version: 3.10
+# Test Runner: pytest
+# Test Directory: tests/
+#
+# Troubleshooting:
+#   - Ensure requirements.txt contains all dependencies, including pytest.
+#   - Check test discovery: pytest will auto-discover tests in tests/.
+#   - If a test fails, the workflow fails and logs will show failure reason.
+#
+# Optimization & Scalability:
+#   - For large test suites, consider using test matrix or parallel jobs.
+#   - Cache pip dependencies for faster builds.
+#   - Integrate coverage reporting for deeper insights.
 
 name: CI Pipeline
 
-description: |
-  Production-ready CI pipeline for Python projects using pytest.
-  Automatically runs all tests on push/PR to main branch with detailed error reporting.
-
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   test:
-    name: Run Pytest Suite
     runs-on: ubuntu-latest
-
     steps:
-      # 1. Checkout code
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Set up Python 3.10
       - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      # 3. Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install pytest; fi
+          if [ -f default/requirements.txt ]; then pip install -r default/requirements.txt; fi
+          pip install pytest
+        shell: bash
 
-      # 4. Run tests with pytest
-      - name: Run pytest
-        run: |
-          pytest tests/ --maxfail=5 --disable-warnings --tb=short
+      - name: Run pytest tests
+        run: pytest tests
 
-      # 5. Upload pytest results (optional, for reporting)
-      - name: Upload pytest results (if available)
-        if: always()
-        uses: actions/upload-artifact@v3
+      - name: Upload pytest results if failed
+        if: failure()
+        uses: actions/upload-artifact@v4
         with:
-          name: pytest-results
-          path: ./**/pytest*.xml
-        continue-on-error: true
+          name: pytest-failure-logs
+          path: .
 
-    # Error handling and reporting
-    # - The job will fail if any test fails (pytest returns non-zero exit code)
-    # - Test output will be available in the Actions UI
-    # - Artifacts are uploaded for further inspection (if generated)
-
-# ======================================================
-# Troubleshooting Guide
-# ------------------------------------------------------
-# - If the workflow fails at 'Install dependencies', ensure requirements.txt exists and is correct.
-# - If tests are not discovered, check that the 'tests' directory and test files follow pytest naming conventions (test_*.py).
-# - Review the Actions logs for detailed error messages.
-# - For permission issues, ensure the workflow file is in the correct path and branch protections allow CI to run.
-#
-# Recommendations for Optimization & Scalability:
-# - Use a build matrix for multiple Python versions if needed.
-# - Cache dependencies for faster builds (actions/cache).
-# - Integrate code coverage (pytest-cov) and upload coverage reports.
-# - Add notifications (Slack, email) for failed builds.
-# ======================================================
+# Documentation:
+# - This workflow will execute on every push or pull request to the main branch.
+# - All tests in the tests/ directory are automatically discovered and run by pytest.
+# - If any test fails, the workflow status will be failed.
+# - For troubleshooting, review the logs in the Actions tab. Failure logs are uploaded as artifacts for failed runs.
+# - To optimize further, see the Optimization & Scalability section above.
