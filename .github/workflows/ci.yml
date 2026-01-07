@@ -1,20 +1,3 @@
-# CI Pipeline for Python Project with pytest
-# This workflow runs on push and pull request events targeting the main branch.
-# It sets up Python 3.10, installs dependencies, and runs all tests in the 'tests' directory using pytest.
-# 
-# ---
-# TROUBLESHOOTING:
-# - If the workflow fails at 'Install dependencies', check requirements.txt and ensure all dependencies are listed.
-# - If 'Run tests' fails, inspect the pytest output for failing test cases and stack traces.
-# - For environment issues, ensure your code and tests are compatible with Python 3.10.
-# 
-# RECOMMENDATIONS:
-# - For large projects, consider caching dependencies to speed up workflow runs.
-# - Use pytest plugins for advanced reporting (e.g., pytest-cov for coverage).
-# - Integrate status badges in your README for CI visibility.
-# - Review workflow run logs for optimization opportunities.
-# ---
-
 name: CI Pipeline
 
 on:
@@ -27,9 +10,11 @@ on:
 
 jobs:
   test:
-    name: Run Pytest on Python 3.10
+    name: Run Pytest Test Suite
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -44,27 +29,39 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f default/requirements.txt ]; then pip install -r default/requirements.txt; else pip install pytest; fi
 
-      - name: Run tests with pytest
+      - name: Run pytest and generate report
         run: |
-          pytest tests/
+          pytest tests --maxfail=1 --disable-warnings --tb=short --junitxml=pytest-report.xml
 
-      - name: Upload pytest results (if any)
+      - name: Upload Pytest Report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: pytest-results
-          path: .pytest_cache/
+          name: pytest-report
+          path: pytest-report.xml
 
-      - name: Generate summary report
+      - name: Troubleshooting Guide
         if: failure()
         run: |
-          echo "::error::Some tests failed. Check the logs above for details."
+          echo '::error::One or more tests failed. Please review the pytest-report.xml artifact for details.'
+          echo 'Common issues:'
+          echo '  - Missing dependencies: Check requirements.txt.'
+          echo '  - Syntax errors in test files.'
+          echo '  - Incorrect test discovery (tests should be in the tests/ directory).'
 
 #
 # Documentation:
-# - This workflow will automatically run on every push to main and on pull requests targeting main.
-# - It installs dependencies from default/requirements.txt (containing pytest), then runs all tests in the 'tests' directory.
-# - The workflow will fail if any test fails, ensuring code quality.
-# - Test results cache is uploaded as an artifact for further inspection if needed.
+# This workflow automatically runs all pytest test cases under the tests/ directory on every push and pull request to main.
 #
-# For more information, see the README.md in the 'default' directory.
+# - Python 3.10 is set up on the runner.
+# - Dependencies are installed from default/requirements.txt if present; otherwise, pytest is installed directly.
+# - Pytest runs with minimal output and a JUnit XML report is generated and uploaded as an artifact.
+# - If any test fails, the workflow fails and a troubleshooting guide is printed.
+# - No source or test files are modified by this workflow.
+#
+# Optimization/Scalability Recommendations:
+# - For large projects, consider parallelizing test execution using matrix strategies.
+# - Integrate coverage reporting (e.g., codecov) for deeper insights.
+# - Add caching for dependencies to speed up builds.
+# - Use secrets and environment variables for secure deployments.
+#
