@@ -1,23 +1,29 @@
-# CI Pipeline for Python project using pytest
-# This workflow runs on push and pull requests to the main branch.
-# It sets up Python 3.10, installs dependencies, runs tests, and fails on test errors.
+# =============================================================
+# GitHub Actions CI Workflow for Python (pytest)
 #
-# TROUBLESHOOTING:
-# - If the workflow fails at 'Install dependencies', ensure requirements.txt exists and is valid.
-# - If tests are not found, verify that the 'tests' directory exists and contains test_*.py files.
-# - For Python import errors, check that 'src' is present and importable.
+# This workflow runs pytest-based tests on every push and pull
+# request targeting the main branch. It ensures code quality,
+# reliability, and fast feedback for all contributors.
 #
-# OPTIMIZATION & SCALABILITY RECOMMENDATIONS:
-# - Pin dependency versions in requirements.txt for reproducibility.
-# - Add caching for pip dependencies to speed up builds.
-# - Integrate code coverage reporting (e.g., with pytest-cov).
-# - Use matrix builds for multiple Python versions if needed.
-# - Add test result uploads as workflow artifacts for deeper analysis.
+# Key Features:
+#  - Triggers on push to main and PRs targeting main
+#  - Python 3.10 environment
+#  - Installs dependencies from requirements.txt (pytest)
+#  - Runs all tests in the tests/ directory
+#  - Fails pipeline on any test failure
+#  - Provides test summary and error output
 #
-# VALIDATION REPORT:
-# - This workflow is production-ready for Python 3.10 projects using pytest.
-# - It fails the build on any test error and provides detailed output in GitHub Actions logs.
+# Troubleshooting:
+#  - Check the 'Install dependencies' and 'Run tests' steps for errors
+#  - Ensure requirements.txt includes all dependencies
+#  - Review pytest output for failed assertions
 #
+# Recommendations:
+#  - For larger projects, consider using pytest-cov for coverage
+#  - Use artifacts to upload test reports if needed
+#  - Pin dependency versions for reproducibility
+# =============================================================
+
 name: CI Pipeline
 
 on:
@@ -29,6 +35,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    name: Run Python unit tests (pytest)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -43,15 +50,28 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run pytest tests
+      - name: Run tests with pytest
         run: |
           pytest tests/
-        # The workflow will fail if any test fails (non-zero exit code)
 
-      - name: Upload pytest results (optional)
+      - name: Upload pytest results on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: pytest-failure-logs
           path: .
-        # You can customize this step to upload test result files if needed
+
+#
+# Documentation:
+# - This workflow will stop and mark the check as failed if any test fails.
+# - All test output is available in the workflow logs for diagnosis.
+#
+# Validation Report:
+# - Triggers: Push to main, PRs to main
+# - Python 3.10 runner
+# - Installs pytest from requirements.txt
+# - Executes all tests in tests/
+# - Fails on any test error
+# - No modification to source or test files
+#
+# For further help, see https://docs.github.com/en/actions
