@@ -1,25 +1,30 @@
 # Math Operations
 
-This repository contains Python functions for basic math operations (addition and subtraction) and corresponding test cases using pytest.
+This repository contains Python functions for basic math operations (addition and subtraction) and their corresponding test cases.
 
 ## Files
 
-- **src/math_operations.py**: Contains the implementation of addition and subtraction functions.
-- **tests/test_add.py**: Contains test cases for the addition function.
-- **tests/test_subtract.py**: Contains test cases for the subtraction function.
+- `src/math_operations.py`: Contains the `add` and `subtract` functions.
+- `tests/test_add.py`: Contains test cases for the `add` function.
+- `tests/test_subtract.py`: Contains test cases for the `subtract` function.
 
-## How to Run Tests
+## Usage
 
-1. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-
-2. Run tests using pytest:
-   ```
-   pytest tests/
-   ```
+1. Clone the repository.
+2. Install dependencies from `requirements.txt`.
+3. Run tests using `pytest`.
 
 ## CI Workflow
 
-This repository is configured for CI workflows using GitHub Actions. The workflow runs tests automatically on every push or pull request to the `main` branch.
+The repository is integrated with a CI pipeline to run tests automatically on every push or pull request to the `main` branch.
+
+## Requirements
+
+- Python 3.10
+- pytest
+
+## Running Tests
+
+```bash
+pytest tests/
+```
