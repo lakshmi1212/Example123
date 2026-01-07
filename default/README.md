@@ -1,20 +1,13 @@
-# Math Operations
+# Example123 Repository
 
-This repository contains basic mathematical operations and their corresponding test cases. The operations include addition and subtraction.
+This repository contains basic math operations and their corresponding tests.
 
-## Structure
-
-- `src/`: Contains the Python file `math_operations.py` with the implementation of addition and subtraction.
-- `tests/`: Contains test files `test_add.py` and `test_subtract.py` to validate the operations.
-- `math.json`: Metadata file for CI/CD workflow integration.
-- `requirements.txt`: Lists dependencies.
+## Files
+- `src/math_operations.py`: Contains addition and subtraction functions.
+- `tests/test_add.py`: Tests for the addition function.
+- `tests/test_subtract.py`: Tests for the subtraction function.
+- `math.json`: Metadata for CI/CD workflow.
+- `requirements.txt`: Python dependencies.
 
 ## Usage
-
-1. Clone the repository.
-2. Install dependencies using `pip install -r requirements.txt`.
-3. Run tests using `pytest`.
-
-## Workflow
-
-This repository is integrated with a CI/CD pipeline to ensure code quality and correctness.
+Run `pytest` in the `tests` folder to execute all test cases.
