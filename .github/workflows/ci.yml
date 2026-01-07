@@ -1,20 +1,31 @@
+# =====================================================
+# CI Pipeline for Python Project (Pytest Integration)
+# -----------------------------------------------------
+# This workflow automatically runs all pytest test cases
+# under the 'tests' directory on every push or pull request
+# targeting the 'main' branch.
+#
+# Key Features:
+# - Python 3.10 environment setup
+# - Dependency installation from requirements.txt
+# - Pytest execution with error handling
+# - Fails pipeline if any test fails
+# - Generates summary and artifact for test results
+# =====================================================
+
 name: CI Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   test:
-    name: Run Pytest Test Suite
+    name: Run Pytest Tests
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,37 +42,42 @@ jobs:
 
       - name: Run pytest and generate report
         run: |
-          pytest tests --maxfail=1 --disable-warnings --tb=short --junitxml=pytest-report.xml
+          mkdir -p test-results
+          pytest tests --junitxml=test-results/results.xml
+        continue-on-error: false
 
-      - name: Upload Pytest Report
+      - name: Upload Pytest results as artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: pytest-report
-          path: pytest-report.xml
+          name: pytest-results
+          path: test-results/results.xml
 
-      - name: Troubleshooting Guide
-        if: failure()
+      - name: Display test summary
+        if: always()
         run: |
-          echo '::error::One or more tests failed. Please review the pytest-report.xml artifact for details.'
-          echo 'Common issues:'
-          echo '  - Missing dependencies: Check requirements.txt.'
-          echo '  - Syntax errors in test files.'
-          echo '  - Incorrect test discovery (tests should be in the tests/ directory).'
+          if [ -f test-results/results.xml ]; then
+            echo "Test results XML found."
+            head -n 20 test-results/results.xml || true
+          else
+            echo "No test results found."
+          fi
 
-#
+# =====================================================
 # Documentation:
-# This workflow automatically runs all pytest test cases under the tests/ directory on every push and pull request to main.
+# - This workflow is triggered on push and pull_request events to 'main'.
+# - It sets up Python 3.10 and installs dependencies (pytest).
+# - All tests in the 'tests' directory are executed using pytest.
+# - The workflow fails if any test fails (exit code != 0).
+# - Pytest results are uploaded as an artifact for further inspection.
 #
-# - Python 3.10 is set up on the runner.
-# - Dependencies are installed from default/requirements.txt if present; otherwise, pytest is installed directly.
-# - Pytest runs with minimal output and a JUnit XML report is generated and uploaded as an artifact.
-# - If any test fails, the workflow fails and a troubleshooting guide is printed.
-# - No source or test files are modified by this workflow.
+# Troubleshooting:
+# - If the workflow fails at dependency installation, check requirements.txt format.
+# - If tests are not discovered, ensure they are named 'test_*.py' and are in the 'tests' directory.
+# - Inspect 'pytest-results' artifact for detailed test output.
 #
-# Optimization/Scalability Recommendations:
-# - For large projects, consider parallelizing test execution using matrix strategies.
-# - Integrate coverage reporting (e.g., codecov) for deeper insights.
-# - Add caching for dependencies to speed up builds.
-# - Use secrets and environment variables for secure deployments.
-#
+# Recommendations for Optimization & Scalability:
+# - Add caching for pip dependencies to speed up builds.
+# - Integrate code coverage reporting (e.g., pytest-cov, Codecov).
+# - Add additional jobs for linting, security scanning, or multi-version testing.
+# =====================================================
