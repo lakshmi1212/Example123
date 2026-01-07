@@ -12,3 +12,4 @@ def test_add_mixed_numbers():
 
 def test_add_with_zero():
     assert add(0, 5) == 5
+    assert add(5, 0) == 5
