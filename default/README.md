@@ -1,37 +1,24 @@
 # Math Operations
 
-This repository provides simple math operations (addition and subtraction) implemented in Python.
-
-## Usage
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/lakshmi1212/Example123.git
-   ```
-
-2. Navigate to the project directory:
-   ```bash
-   cd Example123
-   ```
-
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Run tests:
-   ```bash
-   pytest
-   ```
-
-## CI Workflow
-
-This repository is integrated with a CI pipeline that runs tests on every push or pull request to the `main` branch. The workflow is defined in `.github/workflows/ci.yml`.
+This repository contains Python functions for basic mathematical operations (addition and subtraction) and their corresponding test cases.
 
 ## Files
 
-- `src/math_operations.py`: Contains the implementation of addition and subtraction functions.
-- `tests/test_add.py`: Contains test cases for the addition function.
-- `tests/test_subtract.py`: Contains test cases for the subtraction function.
-- `requirements.txt`: Lists dependencies.
-- `math.json`: Metadata for CI workflow generation.
+- **src/math_operations.py**: Contains the `add` and `subtract` functions.
+- **tests/test_add.py**: Tests for the `add` function.
+- **tests/test_subtract.py**: Tests for the `subtract` function.
+
+## Requirements
+
+- Python 3.10 or higher
+- pytest
+
+## Usage
+
+1. Clone the repository.
+2. Install the required dependencies using `pip install -r requirements.txt`.
+3. Run the tests using `pytest`.
+
+## CI/CD Workflow
+
+The repository is set up with a CI pipeline to automatically run tests on every push or pull request to the `main` branch.
