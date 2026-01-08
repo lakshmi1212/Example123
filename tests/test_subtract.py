@@ -1,14 +1,9 @@
 import pytest
 from src.math_operations import subtract
 
-def test_subtract_positive_numbers():
+def test_subtract():
     assert subtract(10, 5) == 5
-
-def test_subtract_negative_numbers():
-    assert subtract(-10, -5) == -5
-
-def test_subtract_mixed_numbers():
-    assert subtract(10, -5) == 15
-
-def test_subtract_with_zero():
-    assert subtract(0, 5) == -5
+    assert subtract(0, 0) == 0
+    assert subtract(-1, -1) == 0
+    assert subtract(100, 50) == 50
+    assert subtract(-10, 10) == -20
