@@ -1,13 +1,15 @@
-name: CI Pipeline
+name: CI
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: Run Tests
+    name: Run tests
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,8 +19,8 @@ jobs:
           python-version: '3.10'
       - name: Install dependencies
         run: |
-          pip install pytest
+          python -m pip install --upgrade pip
           pip install -r default/requirements.txt
       - name: Run pytest
         run: |
-          pytest - m tests/ -v --tb=short
+          pytest -m tests/ -v --tb=short
