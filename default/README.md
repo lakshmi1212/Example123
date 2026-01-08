@@ -1,6 +1,12 @@
-# Math Operations Project
+# Math Operations
 
-This project provides basic math operations (addition and subtraction) and includes automated tests using pytest.
+This repository contains Python functions for basic mathematical operations (addition and subtraction) and their respective test cases.
+
+## Structure
+
+- `src/math_operations.py`: Contains the implementation of the `add` and `subtract` functions.
+- `tests/test_add.py`: Contains test cases for the `add` function.
+- `tests/test_subtract.py`: Contains test cases for the `subtract` function.
 
 ## Usage
 
@@ -19,13 +25,11 @@ This project provides basic math operations (addition and subtraction) and inclu
    pip install -r requirements.txt
    ```
 
-4. Run the tests:
+4. Run tests:
    ```bash
-   pytest tests/
+   pytest
    ```
 
-## Workflow
+## CI/CD Workflow
 
-- The source code is located in the `src` folder.
-- Tests are located in the `tests` folder.
-- A CI pipeline can be configured using the provided `math.json` metadata file.
+This repository is designed to be integrated with a CI/CD pipeline for automated testing and deployment. The workflow file can be generated using the `math.json` metadata file.
