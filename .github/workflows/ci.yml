@@ -7,11 +7,11 @@ on:
     branches: [main]
 
 jobs:
-  test_job:
+  test_python:
     runs-on: ubuntu-latest
-    name: Run Pytest
+    name: Run Python Tests
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
