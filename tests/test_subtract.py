@@ -1,8 +1,13 @@
 import pytest
 from src.math_operations import subtract
 
-def test_subtract():
-    assert subtract(5, 3) == 2
-    assert subtract(0, 0) == 0
-    assert subtract(10, 20) == -10
-    assert subtract(-5, -5) == 0
+@pytest.mark.parametrize("a,b,expected", [
+    (3, 2, 1),
+    (0, 0, 0),
+    (-1, -1, 0),
+    (200, 100, 100),
+    (-5, 5, -10),
+    (2.5, 3.5, -1.0),
+])
+def test_subtract(a, b, expected):
+    assert subtract(a, b) == expected
