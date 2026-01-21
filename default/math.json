@@ -1,5 +1,5 @@
 {
-  "agent_role": "ci_workflow_generator",
+  "agent_role": "ci_workflow_16generator",
   "repository": {
     "url": "https://github.com/lakshmi1212/Example123",
     "branch": "main"
@@ -17,10 +17,11 @@
     "version": "3.10"
   },
   "dependencies": [
-    "pytest"
+    "pytest==8.0.0"
   ],
   "test_execution": {
     "test_directory": "tests",
+    "pytest_command": "python -m pytest tests/ -v --tb=short",
     "fail_on_error": true
   },
   "constraints": {
@@ -30,5 +31,37 @@
   "commit": {
     "enabled": true,
     "message": "Add CI workflow for Python tests"
-  }
+  },
+  "jobs": [
+    {
+      "job_id": "test_job",
+      "job_name": "Run Pytest",
+      "runs_on": "ubuntu-latest",
+      "steps": [
+        {
+          "step_name": "Checkout",
+          "action_type": "uses",
+          "action": "actions/checkout@v4"
+        },
+        {
+          "step_name": "Set up Python",
+          "action_type": "uses",
+          "action": "actions/setup-python@v5",
+          "with": {
+            "python-version": "3.10"
+          }
+        },
+        {
+          "step_name": "Install dependencies",
+          "action_type": "run",
+          "command": "pip install -r default/requirements.txt"
+        },
+        {
+          "step_name": "Run tests",
+          "action_type": "run",
+          "command": "python -m pytest tests/ -v --tb=short"
+        }
+      ]
+    }
+  ]
 }
