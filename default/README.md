@@ -1,30 +1,30 @@
-# Math Operations
+# Example123
 
-This repository provides basic math operations (addition and subtraction) with automated tests and CI integration.
+## Math Operations
 
-## Usage
+This repository provides basic math operations (addition and subtraction) and their corresponding tests.
+
+### Usage
 
 ```
 from src.math_operations import add, subtract
 
-print(add(2, 3))        # Output: 5
-print(subtract(5, 2))   # Output: 3
+result_add = add(2, 3)
+result_subtract = subtract(5, 2)
 ```
 
-## Running Tests
+### Testing
 
 Install dependencies:
-
 ```
 pip install -r default/requirements.txt
 ```
 
-Run tests:
-
+Run all tests:
 ```
 pytest tests/ -v --tb=short
 ```
 
-## CI/CD Workflow
+### CI Workflow
 
-A GitHub Actions workflow is expected in `.github/workflows/ci.yml` to run tests on each push or pull request.
+The CI pipeline is defined in `.github/workflows/ci.yml` and runs all tests on push and pull request events.
