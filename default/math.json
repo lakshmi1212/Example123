@@ -34,8 +34,8 @@
   },
   "jobs": [
     {
-      "job_id": "test_python",
-      "job_name": "Run Python Tests",
+      "job_id": "test_python_math_ops",
+      "job_name": "Run Python Math Operations Tests",
       "runs_on": "ubuntu-latest",
       "steps": [
         {
