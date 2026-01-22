@@ -2,14 +2,16 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  test_python:
+  test_python_math_ops:
     runs-on: ubuntu-latest
-    name: Run Python Tests
+    name: Run Python Math Operations Tests
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
