@@ -1,24 +1,26 @@
 # Math Operations Example
 
-This repository provides basic math operations (addition and subtraction) implemented in Python, along with comprehensive pytest-based test coverage.
+This repository provides basic math operations (addition and subtraction) with production-ready test automation and CI/CD integration.
 
-## Folder Structure
-
-- `src/`: Contains the production code (`math_operations.py`).
-- `tests/`: Contains test files for each operation (`test_add.py`, `test_subtract.py`).
-- `default/`: Contains workflow metadata (`math.json`), requirements, and documentation.
+## Structure
+- `src/math_operations.py`: Business logic for add and subtract functions.
+- `tests/test_add.py`, `tests/test_subtract.py`: Pytest test cases for math operations.
+- `default/requirements.txt`: Python dependencies for testing.
+- `default/math.json`: Metadata for CI workflow generation.
 
 ## Usage
+```
+from src.math_operations import add, subtract
+print(add(2, 3))        # Output: 5
+print(subtract(5, 2))   # Output: 3
+```
 
-1. Install dependencies:
-   ```bash
-   pip install -r default/requirements.txt
-   ```
-2. Run all tests:
-   ```bash
-   python -m pytest tests/ -v --tb=short
-   ```
+## Testing
+Install dependencies and run tests:
+```
+pip install -r default/requirements.txt
+pytest tests/ -v --tb=short
+```
 
-## CI Workflow
-
-This repository is set up for GitHub Actions CI. Workflow metadata can be found in `default/math.json`. The workflow runs tests on every push and pull request to the `main` branch.
+## CI/CD
+Refer to `default/math.json` for workflow metadata. The CI pipeline runs all tests on push and pull requests targeting the `main` branch.
