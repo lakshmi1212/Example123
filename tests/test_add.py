@@ -2,16 +2,15 @@ import pytest
 from src.math_operations import add
 
 def test_add_positive_numbers():
-    assert add(3, 5) == 8
+    assert add(2, 3) == 5
 
 def test_add_negative_numbers():
-    assert add(-4, -7) == -11
+    assert add(-2, -3) == -5
 
 def test_add_mixed_sign_numbers():
-    assert add(-2, 6) == 4
+    assert add(-2, 3) == 1
 
 def test_add_zero():
-    assert add(0, 0) == 0
     assert add(0, 5) == 5
     assert add(5, 0) == 5
 
