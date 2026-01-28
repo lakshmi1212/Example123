@@ -34,27 +34,30 @@
   },
   "jobs": [
     {
-      "job_id": "ci_python_tests",
+      "job_id": "test_python",
       "job_name": "Run Python Tests",
       "runs_on": "ubuntu-latest",
       "steps": [
         {
-          "step_name": "Checkout Code",
+          "step_name": "Checkout repository",
           "action_type": "uses",
           "action": "actions/checkout@v4"
         },
         {
-          "step_name": "Set Up Python",
+          "step_name": "Set up Python",
           "action_type": "uses",
-          "action": "actions/setup-python@v5"
+          "action": "actions/setup-python@v5",
+          "with": {
+            "python-version": "3.10"
+          }
         },
         {
-          "step_name": "Install Dependencies",
+          "step_name": "Install dependencies",
           "action_type": "run",
           "command": "pip install -r default/requirements.txt"
         },
         {
-          "step_name": "Run Pytest",
+          "step_name": "Run tests",
           "action_type": "run",
           "command": "python -m pytest tests/ -v --tb=short"
         }
