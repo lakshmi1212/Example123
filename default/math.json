@@ -21,7 +21,7 @@
   ],
   "test_execution": {
     "test_directory": "tests",
-    "pytest_command": "python -m pytest tests/ -v --tb=short",
+    "pytest_command": "pytest tests/ -v --tb=short",
     "fail_on_error": true
   },
   "constraints": {
@@ -34,32 +34,29 @@
   },
   "jobs": [
     {
-      "job_id": "test_python",
-      "job_name": "Run Python Tests",
+      "job_id": "ci_test",
+      "job_name": "Run Pytest Suite",
       "runs_on": "ubuntu-latest",
       "steps": [
         {
-          "step_name": "Checkout repository",
+          "step_name": "Checkout Code",
           "action_type": "uses",
           "action": "actions/checkout@v4"
         },
         {
-          "step_name": "Set up Python",
+          "step_name": "Set up Python 3.10",
           "action_type": "uses",
-          "action": "actions/setup-python@v5",
-          "with": {
-            "python-version": "3.10"
-          }
+          "action": "actions/setup-python@v4"
         },
         {
-          "step_name": "Install dependencies",
+          "step_name": "Install Dependencies",
           "action_type": "run",
           "command": "pip install -r default/requirements.txt"
         },
         {
-          "step_name": "Run tests",
+          "step_name": "Run Pytest",
           "action_type": "run",
-          "command": "python -m pytest tests/ -v --tb=short"
+          "command": "pytest tests/ -v --tb=short"
         }
       ]
     }
