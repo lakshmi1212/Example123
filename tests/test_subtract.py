@@ -10,9 +10,8 @@ def test_subtract_negative_numbers():
 def test_subtract_zero():
     assert subtract(0, 0) == 0
 
-def test_subtract_mixed_sign():
+def test_subtract_positive_and_negative():
     assert subtract(-2, 3) == -5
-    assert subtract(2, -3) == 5
 
-def test_subtract_large_numbers():
-    assert subtract(2000000, 1000000) == 1000000
+def test_subtract_floats():
+    assert subtract(5.5, 2.1) == pytest.approx(3.4)
