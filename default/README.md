@@ -1,31 +1,33 @@
-# Example123
+# Math Operations Example
 
-This repository contains basic math operations implemented in Python, with automated tests and CI/CD workflow integration.
+This repository provides basic math operations (addition and subtraction) with automated testing and CI/CD workflow integration.
 
-## Features
-- Addition and subtraction functions
-- Pytest-based tests
-- GitHub Actions CI workflow (see .github/workflows/ci.yml)
+## Folder Structure
+
+- `src/`: Source code for math operations
+- `tests/`: Pytest-based unit tests
+- `default/`: Project metadata, requirements, and documentation
 
 ## Usage
 
-```python
-from src.math_operations import add, subtract
-
-print(add(2, 3))        # 5
-print(subtract(5, 2))   # 3
-```
+1. Install dependencies:
+   ```bash
+   pip install -r default/requirements.txt
+   ```
+2. Use the functions in `src/math_operations.py`:
+   ```python
+   from src.math_operations import add, subtract
+   print(add(2, 3))        # Output: 5
+   print(subtract(5, 2))   # Output: 3
+   ```
 
 ## Running Tests
 
-Install dependencies:
-
-```bash
-pip install -r default/requirements.txt
-```
-
-Run tests:
-
+Run all tests with:
 ```bash
 pytest tests/ -v --tb=short
 ```
+
+## CI/CD
+
+This project is designed for integration with GitHub Actions using a workflow file at `.github/workflows/ci.yml`.
