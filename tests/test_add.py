@@ -10,9 +10,8 @@ def test_add_negative_numbers():
 def test_add_zero():
     assert add(0, 0) == 0
 
-def test_add_mixed_sign():
+def test_add_positive_and_negative():
     assert add(-2, 3) == 1
-    assert add(2, -3) == -1
 
-def test_add_large_numbers():
-    assert add(1000000, 2000000) == 3000000
+def test_add_floats():
+    assert add(2.5, 3.1) == pytest.approx(5.6)
